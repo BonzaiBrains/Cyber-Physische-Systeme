@@ -2,4 +2,4 @@
 
 ## Themen
 
-* Dachlucken Steuerung
+* Dachluken Steuerung
