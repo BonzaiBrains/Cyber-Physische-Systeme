@@ -48,20 +48,20 @@ def button_press():
 def magnet():
     global magnet_status 
     if (GPIO.input(InputMagnet) == True): # Wenn der InputMagnet stromlos ist
-        magnet_status = 0
+        magnet_status = 0 # magnet_status auf 0 gesetzt
         print("Nicht Offen")
-    else:
-        magnet_status = 1
+    else: # Wenn der InputMagnet strom hat
+        magnet_status = 1 # magnet_status auf 0 gesetzt
         print("Offen")
     return magnet_status
     
 def main():
     while True:
-        if (datetime.datetime.now().strftime("%M") == "19"):
-            servo_lock()
+        if (datetime.datetime.now().strftime("%M") == "19"): # Wenn eine Gewisse Uhrzeit zurück gegeben ist und gleich dem Wert ist 
+            servo_lock() # Servo verriegeln
             print("Verschloßen")
-        elif (datetime.datetime.now().strftime("%M") == "20"):
-            servo_unlock()
+        elif (datetime.datetime.now().strftime("%M") == "20"): # Wenn eine Gewisse Uhrzeit zurück gegeben ist und gleich dem Wert ist
+            servo_unlock() # Servo entriegeln
             print("Nicht Verschloßen")
         button_press()
         magnet()
