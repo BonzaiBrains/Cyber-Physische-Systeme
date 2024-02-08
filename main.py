@@ -3,52 +3,51 @@ import RPi.GPIO as GPIO
 import time, datetime
 
 # Pins
-ServoPin = 15
-BeepPin = 11
-InputMagnet = 13
-InputButton = 35
+ServoPin = 15 # Board Pin für den Servo
+BuzzerPin = 11 # Board Pin für den Buzzer
+InputMagnet = 13# Board Pin für den Magnet-Sensor
+InputButton = 35# Board Pin für den Knopf
 
-GPIO.setmode(GPIO.BOARD)# Numbers GPIOs by BCM
-GPIO.setup(ServoPin, GPIO.OUT) #SetServoControl Pin is output
-GPIO.setup(BeepPin, GPIO.OUT)   # Set BeepPin's mode is output
-GPIO.output(BeepPin, GPIO.HIGH) # Set BeepPin high(+3.3V) to off beep
-GPIO.setup(InputMagnet, GPIO.IN)
-GPIO.setup(InputButton, GPIO.IN)
-p = GPIO.PWM(ServoPin, 50)
-p.start(0)
+GPIO.setmode(GPIO.BOARD)# Nummern GPIOs by BOARD
+GPIO.setup(ServoPin, GPIO.OUT) # Setzt ServoPin als Ausgang
+GPIO.setup(BuzzerPin, GPIO.OUT) # Setzt BuzzerPin als Ausgange
+GPIO.output(BuzzerPin, GPIO.HIGH) # Setzt BuzzerPin high(+3.3V) um den buzzer auszuschalten
+GPIO.setup(InputMagnet, GPIO.IN) # Setzt InputMagnet als Eingang
+GPIO.setup(InputButton, GPIO.IN) # Setzt InputButton als Eingang
+p = GPIO.PWM(ServoPin, 50) # Setzt Herz Zahl für den ServoPin  
+p.start(0) # Startet PWM für den ServoPin
 
-global button_status
-global magnet_status
+global button_status # Globale Variable button_status 
+global magnet_status # Globale Variable magnet_status
 
 def servo_lock():
-    print("bar")
-    p.ChangeDutyCycle(11.5)
+    p.ChangeDutyCycle(11.5) # Servo rotieren zum verriegeln 
     time.sleep(.1)
+    
 def servo_unlock():
-    p.ChangeDutyCycle(1.9)
+    p.ChangeDutyCycle(1.9) # Servo rotieren zum entriegeln
     time.sleep(.1)
-    print("foo")
 
 def alarm():
-    while True:
-        GPIO.output(BeepPin, GPIO.LOW)
+    while True: # Lässt den Buzzer laufen bis interupt
+        GPIO.output(BuzzerPin, GPIO.LOW) # Buzzer auf An gesetzt
         time.sleep(0.1)
-        GPIO.output(BeepPin, GPIO.HIGH)
+        GPIO.output(BuzzerPin, GPIO.HIGH) # Buzzer auf Aus gesetzt
         time.sleep(0.1)
 
 def button_press():
     global button_status
-    if (GPIO.input(InputButton) == True):
-        button_status = 1
-    else:
-        button_status = 0
-        #time.sleep(10)
+    if (GPIO.input(InputButton) == True): # Wenn der InputButton stromlos ist
+        button_status = 1 # button_status auf 1 gesetzt
+    else:  # Wenn der InputButton strom hat
+        button_status = 0 # button-status auf 0 gesetzt
+        time.sleep(10) # Warten wen knopf gedrückt ist
         print("Knopf gedrückt")
     return button_status
 
 def magnet():
     global magnet_status 
-    if (GPIO.input(InputMagnet) == True):
+    if (GPIO.input(InputMagnet) == True): # Wenn der InputMagnet stromlos ist
         magnet_status = 0
         print("Nicht Offen")
     else:
@@ -74,7 +73,7 @@ def main():
         
     
 def destroy():
-    GPIO.output(BeepPin, GPIO.HIGH)    # beep off
+    GPIO.output(BuzzerPin, GPIO.HIGH)    # beep off
     GPIO.cleanup()                     # Release resource    
 
 if __name__ == '__main__':     # Program start from here
