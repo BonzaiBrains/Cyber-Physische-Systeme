@@ -22,4 +22,6 @@ pip install RPi.GPIO
 
 ![Schaltplan](Schaltplan.png)
 
-## Projectbilder
+## Projekt Bilder
+
+![Bild](Bild.png)
