@@ -79,7 +79,7 @@ def destroy():
 if __name__ == '__main__':     # Program start from here
     print("Drücken Sie Ctrl+C um das Program zu beenden...")
     
-    try: # 
+    try: # Versuche main auszuführen 
         main()
     except KeyboardInterrupt:  # Wenn 'Ctrl+C' gedrückt wird
         destroy()
