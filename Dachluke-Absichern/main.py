@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import RPi.GPIO as GPIO
 import time, datetime
+import threading
 
 # Pins
 servo_pin = 15 # Board Pin für den Servo
@@ -54,15 +55,20 @@ def magnet():
         magnet_status = 1 # magnet_status auf 0 gesetzt
         print("Offen")
     return magnet_status
-    
+   
+def timed_lock_control(locking_time,unlocking_time):
+	if (datetime.datetime.now().strftime("%M") == locking_time): # Wenn eine Gewisse Uhrzeit zurück gegeben ist und gleich dem Wert ist 
+		servo_lock() # Servo verriegeln
+		print("Verschloßen")
+    elif (datetime.datetime.now().strftime("%M") == unlocking_time): # Wenn eine Gewisse Uhrzeit zurück gegeben ist und gleich dem Wert ist
+		servo_unlock() # Servo entriegeln
+		print("Nicht Verschloßen")
+
+
 def main():
+    servo_control = threading.Thread(target=thread_function, args=("19","20"))
+    servo_control.start()
     while True:
-        if (datetime.datetime.now().strftime("%M") == "19"): # Wenn eine Gewisse Uhrzeit zurück gegeben ist und gleich dem Wert ist 
-            servo_lock() # Servo verriegeln
-            print("Verschloßen")
-        elif (datetime.datetime.now().strftime("%M") == "20"): # Wenn eine Gewisse Uhrzeit zurück gegeben ist und gleich dem Wert ist
-            servo_unlock() # Servo entriegeln
-            print("Nicht Verschloßen")
         button_press() # Status Prüfung von input_button
         magnet() # Status Prüfung von input_magnet
         if button_status == 1 and magnet_status == 1: # Wenn der status von button_status und magnet_status beide gleich 1 ist (der input_button wurde nicht gedruckt und der input_magnet ist nicht aktiv)  
@@ -79,8 +85,8 @@ def destroy():
 if __name__ == '__main__':     # Program start from here
     print("Drücken Sie Ctrl+C um das Program zu beenden...")
     
-    try: # 
+    try: # Versuche main auszuführen 
         main()
-    except KeyboardInterrupt:  # Wenn 'Ctrl+C' gedrückt wird
+    except KeyboardInterrupt:  # Aber wenn 'Ctrl+C' gedrückt wird
         destroy()
 
