@@ -6,7 +6,7 @@ import time, datetime
 servo_pin = 15 # Board Pin für den Servo
 buzzer_pin = 11 # Board Pin für den Buzzer
 input_magnet = 13 # Board Pin für den Magnet-Sensor
-input_button = 35 # Board Pin für den Knopf
+input_button = 40 # Board Pin für den Knopf
 
 GPIO.setmode(GPIO.BOARD)# Numern der GPIO Pins auf BOARD definieren
 GPIO.setup(servo_pin, GPIO.OUT) # Setzt servo_pin als Ausgang
@@ -23,11 +23,13 @@ global magnet_status # Globale Variable magnet_status
 def servo_lock():
     pwm.ChangeDutyCycle(11.5) # Servo rotieren zum verriegeln 
     time.sleep(.1)
+    print("Verschlossen")
     
 def servo_unlock():
-    pwm.ChangeDutyCycle(1.9) # Servo rotieren zum entriegeln
+    pwm.ChangeDutyCycle(6) # Servo rotieren zum entriegeln
     time.sleep(.1)
-
+	print("Nicht verschlossen")
+	
 def alarm():
     while True: # Lässt den Buzzer laufen bis interupt
         GPIO.output(buzzer_pin, GPIO.LOW) # Buzzer auf An gesetzt
