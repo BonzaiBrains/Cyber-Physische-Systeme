@@ -23,12 +23,10 @@ global magnet_status # Globale Variable magnet_status
 def servo_lock():
     pwm.ChangeDutyCycle(11.5) # Servo rotieren zum verriegeln 
     time.sleep(.1)
-    print("Verschlossen")
     
 def servo_unlock():
     pwm.ChangeDutyCycle(6) # Servo rotieren zum entriegeln
     time.sleep(.1)
-	print("Nicht verschlossen")
 	
 def alarm():
     while True: # Lässt den Buzzer laufen bis interupt
@@ -85,4 +83,3 @@ if __name__ == '__main__':     # Program start from here
         main()
     except KeyboardInterrupt:  # Wenn 'Ctrl+C' gedrückt wird
         destroy()
-
