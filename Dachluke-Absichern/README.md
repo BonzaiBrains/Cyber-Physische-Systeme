@@ -36,7 +36,7 @@ $ sudo apt install rpi.gpio
 
 ## Schaltplan
 
-![Schaltplan](Schaltplan.png)
+![Schaltplan](schaltplan.png)
 
 ## Projekt Bilder
 
