@@ -98,8 +98,8 @@ while True:
         print(temperature_c)
         print(humidity)
         # Sende die Werte über MQTT
-        #client.publish(mqtt_topic+"Temp", payload=f"{temperature_c}", qos=0)
-        #client.publish(mqtt_topic+"Humid", payload=f"{humidity}", qos=0)
+        client.publish(mqtt_topic+"Temp", payload=f"{temperature_c}", qos=0)
+        client.publish(mqtt_topic+"Humid", payload=f"{humidity}", qos=0)
         
     except RuntimeError as error:
         print(error.args[0])
