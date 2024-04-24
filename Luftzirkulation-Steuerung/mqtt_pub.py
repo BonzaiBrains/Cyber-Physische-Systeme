@@ -21,28 +21,25 @@ def main():
 
 	# Callback of the connection to the MQTT-Broker
 	def on_connect(client, userdata, flags, rc):
-	    print("Verbunden mit MQTT-Broker. Result Code: " + str(rc))
+	    print("Connected to MQTT-Broker. Result Code: " + str(rc))
 
 	while True:
-	    try:
-		# Read DHT22-Sensor Values
-		read_temperature = dhtDevice.temperature
-		read_humidity = dhtDevice.read_humidity
-		print(read_temperature)
-		print(read_humidity)        
-		# Publish read values
-		client.publish(mqtt_topic+"Temp", payload=f"{read_temperature}", qos=0)
-		client.publish(mqtt_topic+"Humid", payload=f"{read_humidity}", qos=0)
-		
-	    except RuntimeError as error:
-		print(error.args[0])
-		time.sleep(1.0)
-		continue
-	    except Exception as error:
-		dhtDevice.exit()
-		raise error
+		try:
+			# Read DHT22-Sensor Values
+			read_temperature = dhtDevice.temperature
+			read_humidity = dhtDevice.humidity
+			print(read_temperature)
+			print(read_humidity)        
+			# Publish read values
+			client.publish(mqtt_topic+"Temp", payload=f"{read_temperature}", qos=0)
+			client.publish(mqtt_topic+"Humid", payload=f"{read_humidity}", qos=0)
+		except RuntimeError as error:
+			print(error.args[0])
+			time.sleep(1.0)
+			continue
+		except Exception as error:
+			dhtDevice.exit()
+			raise error
 
 if __name__ == "__main__":
 	main()
-
-
