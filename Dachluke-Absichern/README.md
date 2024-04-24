@@ -83,7 +83,7 @@ Durch die Zusammenführung der einzelnen Tests und die Entwicklung des Hauptprog
 
 ## Projekt Bilder
 
-![Bild](bild.webp)
+![Bild](bild.png)
 
 ## Code
 
