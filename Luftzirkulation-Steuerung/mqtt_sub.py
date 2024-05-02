@@ -4,8 +4,17 @@ import paho.mqtt.client as mqtt
 import time
 
 def main():
-	mqtt_broker = "172.17.110"
-	mqtt_topic = "Group5/#"
+	def get_value_from_json(json_file, key, sub_key):
+		try:
+			with open(json_file) as f:
+				data = json.load(f)
+				return data[key][sub_key]
+		except Exception as e:
+			print("ERROR: ", e)
+
+	# MQTT Connection Details
+	mqtt_broker = get_value_from_json("secrets.json", "mqtt_broker_sub", "host")
+	mqtt_topic = get_value_from_json("secrets.json", "mqtt_broker_sub", "topic")
 
 	# PIN-Zuweisung am Raspberry
 	A=18
@@ -28,74 +37,74 @@ def main():
 
 	# Motor steps
 	def Step1():
-	    gpio.output(D, True)
-	    time.sleep(time_t)
-	    gpio.output(D, False)
+		gpio.output(D, True)
+		time.sleep(time_t)
+		gpio.output(D, False)
 
 	def Step2():
-	    gpio.output(D, True)
-	    gpio.output(C, True)
-	    time.sleep(time_t)
-	    gpio.output(D, False)
-	    gpio.output(C, False)
+		gpio.output(D, True)
+		gpio.output(C, True)
+		time.sleep(time_t)
+		gpio.output(D, False)
+		gpio.output(C, False)
 
 	def Step3():
-	    gpio.output(C, True)
-	    time.sleep(time_t)
-	    gpio.output(C, False)
+		gpio.output(C, True)
+		time.sleep(time_t)
+		gpio.output(C, False)
 	def Step4():
-	    gpio.output(B, True)
-	    gpio.output(C, True)
-	    time.sleep(time_t)
-	    gpio.output(B, False)
-	    gpio.output(C, False)
+		gpio.output(B, True)
+		gpio.output(C, True)
+		time.sleep(time_t)
+		gpio.output(B, False)
+		gpio.output(C, False)
 
 	def Step5():
-	    gpio.output(B, True)
-	    time.sleep(time_t)
-	    gpio.output(B, False)
+		gpio.output(B, True)
+		time.sleep(time_t)
+		gpio.output(B, False)
 
 	def Step6():
-	    gpio.output(A, True)
-	    gpio.output(B, True)
-	    time.sleep(time_t)
-	    gpio.output(A, False)
-	    gpio.output(B, False)
+		gpio.output(A, True)
+		gpio.output(B, True)
+		time.sleep(time_t)
+		gpio.output(A, False)
+		gpio.output(B, False)
 
 	def Step7():
-	    gpio.output(A, True)
-	    time.sleep(time_t)
-	    gpio.output(A, False)
+		gpio.output(A, True)
+		time.sleep(time_t)
+		gpio.output(A, False)
 
 	def Step8():
-	    gpio.output(D, True)
-	    gpio.output(A, True)
-	    time.sleep(time_t)
-	    gpio.output(D, False)
-	    gpio.output(A, False)
+		gpio.output(D, True)
+		gpio.output(A, True)
+		time.sleep(time_t)
+		gpio.output(D, False)
+		gpio.output(A, False)
 
 	# Motor up rotation
 	def up():
 	    for i in range (128):
-		Step1()    
-		Step2()
-		Step3()
-		Step4()
-		Step5()
-		Step6()
-		Step7()
-		Step8()
+			Step1()    
+			Step2()
+			Step3()
+			Step4()
+			Step5()
+			Step6()
+			Step7()
+			Step8()
 	# Motor down rotation
 	def down():
 	    for i in range (128):
-		Step8()
-		Step7()
-		Step6()
-		Step5()
-		Step4()
-		Step3()
-		Step2()
-		Step1()
+			Step8()
+			Step7()
+			Step6()
+			Step5()
+			Step4()
+			Step3()
+			Step2()
+			Step1()
 
 	# MQTT connection
 	def on_connect(client, userdata, flags, rc, msg):

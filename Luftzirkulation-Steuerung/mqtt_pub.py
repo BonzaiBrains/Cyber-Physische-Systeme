@@ -3,14 +3,25 @@ import time
 import board
 import adafruit_dht
 import paho.mqtt.client as mqtt
+import json
 
 def main():
-	# Initialisation of DHT22-Sensor
-	dhtDevice = adafruit_dht.DHT22(board.D4, use_pulseio=False)
+
+	def get_value_from_json(json_file, key, sub_key):
+		try:
+			with open(json_file) as f:
+				data = json.load(f)
+				return data[key][sub_key]
+		except Exception as e:
+			print("ERROR: ", e)
 
 	# MQTT Connection Details
-	mqtt_broker = "172.17.0.110"
-	mqtt_topic = "Group5/"
+	mqtt_broker = get_value_from_json("secrets.json", "mqtt_broker_pub", "host")
+	mqtt_topic = get_value_from_json("secrets.json", "mqtt_broker_pub", "topic")
+
+
+	# Initialisation of DHT22-Sensor
+	dhtDevice = adafruit_dht.DHT22(board.D4, use_pulseio=False)
 
 	# MQTT-Client Initialisation
 	client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)

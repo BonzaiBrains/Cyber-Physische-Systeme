@@ -13,6 +13,6 @@ def main():
 	thread_sub.start()
 	
 if __name__ == "__main__":
-	thread_pub = threading.Thread(target=mqtt_pub)
-	thread_sub = threading.Thread(target=mqtt_sub)
+	thread_pub = threading.Thread(target=pub)
+	thread_sub = threading.Thread(target=sub)
 	main()
