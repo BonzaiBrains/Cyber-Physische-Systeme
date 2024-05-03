@@ -9,8 +9,8 @@ def sub():
 	mqtt_sub.main()
 	
 def main():
-	thread_pub.start()
-	thread_sub.start()
+	thread_pub.start() # Start thread for publish 
+	thread_sub.start() # Start thread for subscribe
 	
 if __name__ == "__main__":
 	thread_pub = threading.Thread(target=pub)
