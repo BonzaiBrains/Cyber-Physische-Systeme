@@ -1,9 +1,6 @@
 #!/usr/bin/python3
-import time
-import board
-import adafruit_dht
+import time, json, board, adafruit_dht
 import paho.mqtt.client as mqtt
-import json
 
 def main():
 
@@ -40,14 +37,17 @@ def main():
 			read_temperature = dhtDevice.temperature
 			read_humidity = dhtDevice.humidity
 			print(read_temperature)
-			print(read_humidity)        
+			print(read_humidity)
+			
 			# Publish read values
 			client.publish(mqtt_topic+"Temp", payload=f"{read_temperature}", qos=0)
 			client.publish(mqtt_topic+"Humid", payload=f"{read_humidity}", qos=0)
+		
 		except RuntimeError as error:
 			print(error.args[0])
 			time.sleep(1.0)
 			continue
+		
 		except Exception as error:
 			dhtDevice.exit()
 			raise error
