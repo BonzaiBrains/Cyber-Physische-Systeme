@@ -56,7 +56,7 @@ Temperatur/Feuchtigkeit-Sensor:
 * Ein Programm wurde erfasst um die funktion mit einem MQTT Publish process zu verknüpfen. 
 
 Eclipse-MQTT-Broker
-* Wir haben die logs in `/var/log/mosquitto.log`  exuminierung. 
+* Wir haben die logs in `/var/log/mosquitto.log` analysiert und ausgewertet. 
 * Wir haben einen -PUB und MQTT-SUB nachgestellt.
 
 ### Schritt 3: Entwicklung des Hauptprogramms
