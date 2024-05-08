@@ -117,48 +117,45 @@ def main():
 	def on_message(client, userdata, msg):
 	    match msg.topic:
 	    	case "Group5/Humid":
-			temp_humid = float (msg.payload.decode())
-			if temp_humid >= 40:
-				if window_status == 1:
-					print("OPEN")
-					continue
+				temp_humid = float(msg.payload.decode())
+				if temp_humid >= 40:
+					if window_status == 1:
+						print("OPEN")
+					else:
+						up()
+						window_status = 1
+						print("OPEN")
+						time.sleep(1)
 				else:
-					up()
-					window_status = 1:
-					print("OPEN")
-		    			time.sleep(1)
-			else:
-				if window_status == 0: 
-					print("CLOSED")
-					continue
-				else:
-					down()
-					window_status = 0:
-		    			print("CLOSED")
-		    			time.sleep(1)
-			return humid
+					if window_status == 0: 
+						print("CLOSED")
+					else:
+						down()
+						window_status = 0
+						print("CLOSED")
+						time.sleep(1)
+				return humid
 					
 	    	case "Group5/Temp":
-	    	        temp_temperature = float (msg.payload.decode())
-	    	        if temp_temperature >= 23:
-				if window_status == 1:
-					print("OPEN")
-					continue	
+	    	    temp_temperature = float (msg.payload.decode())
+	    		if temp_temperature >= 23:
+					if window_status == 1:
+						print("OPEN")
+						continue	
+					else:
+						up()
+						window_status == 0
+						time.sleep(1)
+						return temp
 				else:
-					up()
-					window_status == 0:
-		    			time.sleep(1)
-		    		return temp
-		    	else:
-				if window_status == 0:
-					print("CLOSED")
-					continue
-				else:
-					down()
-					window_status = 0:
-		    			print("CLOSED")
-		    			time.sleep(1)
-			return temp	
+					if window_status == 0:
+						print("CLOSED")
+					else:
+						down()
+						window_status = 0
+						print("CLOSED")
+						time.sleep(1)
+				return temp	
 	    	case _:
 	    		print("INVALID")
 
