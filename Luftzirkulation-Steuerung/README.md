@@ -1,6 +1,6 @@
 # Projekt Luftzirkulation Steuerung
 
-## ## Ausführung
+## Ausführung
 
 In einem Terminal Emulator `./main.py` ausführen. Mit `Strg-C` können sie das Programm stoppen.
 
